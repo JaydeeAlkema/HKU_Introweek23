@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 58c90b87112361540a9d4128a05ed407, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 46858c6afadaa384bb1bf5e1aec3f17f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3814768421040400183}
   - component: {fileID: 9111159654760676556}
   m_Layer: 6
-  m_Name: Dagger Template
+  m_Name: Axe Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   polygonCollider: {fileID: 9111159654760676556}
-  size: {x: 1, y: 2}
-  cellCount: 8
+  size: {x: 2, y: 3}
+  cellCount: 24
 --- !u!60 &9111159654760676556
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -158,8 +158,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.25, y: 0.75}
-      - {x: -0.25, y: 0.75}
-      - {x: -0.25, y: -0.75}
-      - {x: 0.25, y: -0.75}
+    - - {x: 0.75, y: 1.25}
+      - {x: -0.75, y: 1.25}
+      - {x: -0.75, y: -1.25}
+      - {x: 0.75, y: -1.25}
   m_UseDelaunayMesh: 0

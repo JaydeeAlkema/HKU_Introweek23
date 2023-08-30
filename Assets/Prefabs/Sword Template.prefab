@@ -130,6 +130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c97a6ca56865449b463326cd95e741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  polygonCollider: {fileID: 9111159654760676556}
+  size: {x: 1, y: 3}
+  cellCount: 12
 --- !u!60 &9111159654760676556
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -155,8 +158,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.5, y: 1.5}
-      - {x: -0.5, y: 1.5}
-      - {x: -0.5, y: -1.5}
-      - {x: 0.5, y: -1.5}
+    - - {x: 0.25, y: 1.25}
+      - {x: -0.25, y: 1.25}
+      - {x: -0.25, y: -1.25}
+      - {x: 0.25, y: -1.25}
   m_UseDelaunayMesh: 0

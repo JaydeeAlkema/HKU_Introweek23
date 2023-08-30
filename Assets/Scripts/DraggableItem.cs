@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -8,9 +9,12 @@ namespace Assets.Scripts
 	{
 		[SerializeField] private PolygonCollider2D polygonCollider;
 		[SerializeField] private Vector2 size = default;
+		[SerializeField] private int cellCount = default;
 
 		private Vector3 originalPosition;
+		private Vector3 previousPosition;
 		private Quaternion originalRotation;
+		private Quaternion previousRotation;
 		private List<InventoryCell> occupiedCells = new List<InventoryCell>();
 
 		private void Start()
@@ -21,15 +25,15 @@ namespace Assets.Scripts
 
 		public void PickUp()
 		{
-			originalPosition = transform.position;
-			originalRotation = transform.rotation;
+			previousPosition = transform.position;
+			previousRotation = transform.rotation;
 			Debug.Log($"Picking Up {transform.name}");
 		}
 
 		public void Drag()
 		{
 			Vector3 _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			_mousePosition.z = originalPosition.z;
+			_mousePosition.z = previousPosition.z;
 			transform.position = new Vector3(Mathf.Round(_mousePosition.x * 2) / 2, Mathf.Round(_mousePosition.y * 2) / 2, 0);
 			Debug.Log($"Dragging Up {transform.name}");
 		}
@@ -38,6 +42,13 @@ namespace Assets.Scripts
 		{
 			FindAllOverlappingCellsAndPlaceItemInCenter(transform.position);
 			Debug.Log($"Placing {transform.name}");
+		}
+
+		public void Reset()
+		{
+			transform.SetPositionAndRotation(previousPosition, originalRotation);
+			ClearOccupiedCells();
+			Debug.Log($"Reset {transform.name}");
 		}
 
 		public void Rotate(bool right)
@@ -54,7 +65,19 @@ namespace Assets.Scripts
 		private void FindAllOverlappingCellsAndPlaceItemInCenter(Vector2 position)
 		{
 			Bounds combinedCellsBounds;
-			Collider2D[] colliders = Physics2D.OverlapBoxAll(position, size * 0.95f, 0f, LayerMask.GetMask("Cell"));
+			ContactFilter2D contactFilter = new()
+			{
+				layerMask = LayerMask.GetMask("Cell")
+			};
+
+			List<Collider2D> colliders = new();
+			Physics2D.OverlapCollider(polygonCollider, contactFilter, colliders);
+
+			if (colliders.Count < cellCount)
+			{
+				transform.SetPositionAndRotation(previousPosition, previousRotation);
+				return;
+			}
 
 			foreach (Collider2D collider in colliders)
 			{
@@ -62,8 +85,7 @@ namespace Assets.Scripts
 
 				if (inventoryCell.Occupied && !occupiedCells.Contains(inventoryCell))
 				{
-					transform.position = originalPosition;
-					transform.rotation = originalRotation;
+					transform.SetPositionAndRotation(previousPosition, previousRotation);
 					return;
 				}
 			}
@@ -98,7 +120,18 @@ namespace Assets.Scripts
 
 		private void OnDrawGizmos()
 		{
-			Gizmos.color = Color.yellow;
+			Gizmos.color = Color.green; // Set the Gizmos color
+			Vector2[] points = polygonCollider.GetPath(0); // Get the points of the polygon
+
+			// Draw lines between consecutive points to visualize the edges of the polygon
+			for (int i = 0; i < points.Length; i++)
+			{
+				Vector2 startPoint = transform.TransformPoint(points[i]);
+				Vector2 endPoint = transform.TransformPoint(points[(i + 1) % points.Length]);
+				Gizmos.DrawLine(startPoint, endPoint);
+			}
+
+			Gizmos.color = Color.blue;
 			Gizmos.DrawWireCube(transform.position, size);
 		}
 	}

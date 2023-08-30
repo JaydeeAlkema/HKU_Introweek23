@@ -8,6 +8,19 @@ namespace Assets.Scripts
 
 		private void Update()
 		{
+			if (Input.GetMouseButtonDown(1))
+			{
+				Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Item"));
+
+				if (hit.collider != null)
+				{
+					currentDraggableItem = hit.collider.gameObject.GetComponent<DraggableItem>();
+					currentDraggableItem.Reset();
+					currentDraggableItem = null;
+				}
+			}
+
 			if (Input.GetMouseButtonDown(0))
 			{
 				Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -34,6 +47,8 @@ namespace Assets.Scripts
 				currentDraggableItem.Rotate(false);
 			else if (currentDraggableItem && Input.GetKeyDown(KeyCode.E))
 				currentDraggableItem.Rotate(true);
+
+
 		}
 	}
 }

@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045916225620024513}
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -0.35, y: 0, z: 0}
+  m_LocalPosition: {x: -0.25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   polygonCollider: {fileID: 9111159654760676556}
   size: {x: 2, y: 3}
+  cellCount: 20
 --- !u!60 &9111159654760676556
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -157,8 +158,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1, y: 1.5}
-      - {x: -1, y: 1.5}
-      - {x: -1, y: -1.5}
-      - {x: 1, y: -1.5}
+    - - {x: 0.75, y: 1.25}
+      - {x: -0.75, y: 1.25}
+      - {x: -0.75, y: 0.75}
+      - {x: -0.25, y: 0.75}
+      - {x: -0.25, y: -0.75}
+      - {x: -0.75, y: -0.75}
+      - {x: -0.75, y: -1.25}
+      - {x: 0.75, y: -1.25}
   m_UseDelaunayMesh: 0
