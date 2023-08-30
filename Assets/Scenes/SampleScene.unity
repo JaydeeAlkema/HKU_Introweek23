@@ -3310,11 +3310,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!212 &311895781 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 2641761204248079249, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
-  m_PrefabInstance: {fileID: 1389724731}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &331186684
 GameObject:
   m_ObjectHideFlags: 0
@@ -15900,34 +15895,6 @@ PrefabInstance:
     - target: {fileID: 3523312639388346865, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
       propertyPath: m_Name
       value: Axe Template
-      objectReference: {fileID: 0}
-    - target: {fileID: 3814768421040400183, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
-      propertyPath: cellCount
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3814768421040400183, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
-      propertyPath: spriteRenderer
-      value: 
-      objectReference: {fileID: 311895781}
-    - target: {fileID: 3814768421040400183, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
-      propertyPath: ItemStatsToRollFrom.list.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3814768421040400183, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
-      propertyPath: ItemStatsToRollFrom.list.Array.data[0].item
-      value: 
-      objectReference: {fileID: 11400000, guid: ffc63e76e6978e344bb1d3c8cf1ccd23, type: 2}
-    - target: {fileID: 3814768421040400183, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
-      propertyPath: ItemStatsToRollFrom.list.Array.data[1].item
-      value: 
-      objectReference: {fileID: 11400000, guid: 3850d546e5c068140a610c1c1bb07d83, type: 2}
-    - target: {fileID: 3814768421040400183, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
-      propertyPath: ItemStatsToRollFrom.list.Array.data[0].weight
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3814768421040400183, guid: c811710c76fcf864e96222e8cf9c5bfe, type: 3}
-      propertyPath: ItemStatsToRollFrom.list.Array.data[1].weight
-      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
