@@ -1,7 +1,6 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts
 {
@@ -10,6 +9,10 @@ namespace Assets.Scripts
 		[SerializeField] private PolygonCollider2D polygonCollider;
 		[SerializeField] private Vector2 size = default;
 		[SerializeField] private int cellCount = default;
+		[SerializeField] private SpriteRenderer spriteRenderer;
+		[SerializeField, Expandable] private ItemStats itemStats = default;
+		[Space]
+		[SerializeField] private WeightedRandomList<ItemStats> ItemStatsToRollFrom = new WeightedRandomList<ItemStats>();
 
 		private Vector3 originalPosition;
 		private Vector3 previousPosition;
@@ -19,6 +22,9 @@ namespace Assets.Scripts
 
 		private void Start()
 		{
+			itemStats = ItemStatsToRollFrom.GetRandom();
+			spriteRenderer.sprite = itemStats.Sprite;
+
 			originalPosition = transform.position;
 			originalRotation = transform.rotation;
 		}
@@ -29,7 +35,6 @@ namespace Assets.Scripts
 			previousRotation = transform.rotation;
 			Debug.Log($"Picking Up {transform.name}");
 		}
-
 		public void Drag()
 		{
 			Vector3 _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -37,16 +42,14 @@ namespace Assets.Scripts
 			transform.position = new Vector3(Mathf.Round(_mousePosition.x * 2) / 2, Mathf.Round(_mousePosition.y * 2) / 2, 0);
 			Debug.Log($"Dragging Up {transform.name}");
 		}
-
 		public void Place()
 		{
 			FindAllOverlappingCellsAndPlaceItemInCenter(transform.position);
 			Debug.Log($"Placing {transform.name}");
 		}
-
 		public void Reset()
 		{
-			transform.SetPositionAndRotation(previousPosition, originalRotation);
+			transform.SetPositionAndRotation(originalPosition, originalRotation);
 			ClearOccupiedCells();
 			Debug.Log($"Reset {transform.name}");
 		}
@@ -54,14 +57,13 @@ namespace Assets.Scripts
 		public void Rotate(bool right)
 		{
 			if (right)
-				transform.Rotate(0, 0, transform.rotation.y + 90);
-			else
 				transform.Rotate(0, 0, transform.rotation.y - 90);
+			else
+				transform.Rotate(0, 0, transform.rotation.y + 90);
 
 			Vector2 newSize = new Vector2(size.y, size.x);
 			size = newSize;
 		}
-
 		private void FindAllOverlappingCellsAndPlaceItemInCenter(Vector2 position)
 		{
 			Bounds combinedCellsBounds;
@@ -107,7 +109,6 @@ namespace Assets.Scripts
 
 			transform.position = combinedCellsBounds.center;
 		}
-
 		private void ClearOccupiedCells()
 		{
 			if (occupiedCells.Count == 0) return;
