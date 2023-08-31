@@ -133,6 +133,14 @@ MonoBehaviour:
   polygonCollider: {fileID: 9111159654760676556}
   size: {x: 1, y: 3}
   cellCount: 12
+  spriteRenderer: {fileID: 2641761204248079249}
+  itemStats: {fileID: 0}
+  ItemStatsToRollFrom:
+    list:
+    - item: {fileID: 11400000, guid: eafc096ec4e70d945b52afe7d5d6c5c4, type: 2}
+      weight: 100
+    - item: {fileID: 11400000, guid: 0af230c8e4b915041ae77318487232f0, type: 2}
+      weight: 75
 --- !u!60 &9111159654760676556
 PolygonCollider2D:
   m_ObjectHideFlags: 0

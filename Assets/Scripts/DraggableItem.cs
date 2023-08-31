@@ -18,6 +18,8 @@ namespace Assets.Scripts
 		private Vector3 previousPosition;
 		private Quaternion originalRotation;
 		private Quaternion previousRotation;
+		private Vector2 originalSize;
+		private Vector2 previousSize;
 		private List<InventoryCell> occupiedCells = new List<InventoryCell>();
 
 		private void Start()
@@ -25,6 +27,7 @@ namespace Assets.Scripts
 			itemStats = ItemStatsToRollFrom.GetRandom();
 			spriteRenderer.sprite = itemStats.Sprite;
 
+			originalSize = size;
 			originalPosition = transform.position;
 			originalRotation = transform.rotation;
 		}
@@ -50,6 +53,7 @@ namespace Assets.Scripts
 		public void Reset()
 		{
 			transform.SetPositionAndRotation(originalPosition, originalRotation);
+			size = originalSize;
 			ClearOccupiedCells();
 			Debug.Log($"Reset {transform.name}");
 		}
@@ -78,6 +82,7 @@ namespace Assets.Scripts
 			if (colliders.Count < cellCount)
 			{
 				transform.SetPositionAndRotation(previousPosition, previousRotation);
+				size = previousSize;
 				return;
 			}
 
@@ -88,10 +93,12 @@ namespace Assets.Scripts
 				if (inventoryCell.Occupied && !occupiedCells.Contains(inventoryCell))
 				{
 					transform.SetPositionAndRotation(previousPosition, previousRotation);
+					size = previousSize;
 					return;
 				}
 			}
 
+			previousSize = size;
 			ClearOccupiedCells();
 			foreach (Collider2D collider in colliders)
 			{

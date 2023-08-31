@@ -11,7 +11,7 @@ namespace Assets.Scripts
 
 		private void Awake()
 		{
-			spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+			spriteRenderer = transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
 			spriteRenderer.color = Color.white;
 		}
 
