@@ -130,12 +130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c97a6ca56865449b463326cd95e741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  polygonCollider: {fileID: 9111159654760676556}
-  size: {x: 1, y: 3}
-  cellCount: 12
-  spriteRenderer: {fileID: 2641761204248079249}
-  itemStats: {fileID: 0}
-  ItemStatsToRollFrom:
+  _polygonCollider: {fileID: 9111159654760676556}
+  _size: {x: 1, y: 3}
+  _cellCount: 12
+  _spriteRenderer: {fileID: 2641761204248079249}
+  _itemStats: {fileID: 0}
+  _ItemStatsToRollFrom:
     list:
     - item: {fileID: 11400000, guid: eafc096ec4e70d945b52afe7d5d6c5c4, type: 2}
       weight: 100

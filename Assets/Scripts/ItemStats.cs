@@ -18,11 +18,15 @@ public enum ItemRarity
 [CreateAssetMenu(fileName = "Item Stats", menuName = "ScriptableObjects/New Item Stats")]
 public class ItemStats : ScriptableObject
 {
-	[SerializeField] private Sprite sprite;
-	[SerializeField] private ItemRarity rarity = ItemRarity.Junk;
-	[SerializeField] private int cost = 25;
+	[SerializeField] private Sprite _sprite;
+	[SerializeField] private ItemRarity _rarity = ItemRarity.Junk;
+	[SerializeField] private string title = default;
+	[SerializeField] private string description = default;
+	[SerializeField] private int _cost = 25;
 
-	public Sprite Sprite { get => sprite; }
-	public ItemRarity Rarity { get => rarity; }
-	public int Cost { get => cost; }
+	public Sprite Sprite { get => _sprite; }
+	public ItemRarity Rarity { get => _rarity; }
+	public string Title { get => title; }
+	public string Description { get => description; }
+	public int Cost { get => _cost; }
 }

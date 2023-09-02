@@ -6,42 +6,44 @@ namespace Assets.Scripts
 {
 	public class DraggableItem : MonoBehaviour
 	{
-		[SerializeField] private PolygonCollider2D polygonCollider;
-		[SerializeField] private Vector2 size = default;
-		[SerializeField] private int cellCount = default;
-		[SerializeField] private SpriteRenderer spriteRenderer;
-		[SerializeField, Expandable] private ItemStats itemStats = default;
+		[SerializeField] private PolygonCollider2D _polygonCollider;
+		[SerializeField] private Vector2 _size = default;
+		[SerializeField] private int _cellCount = default;
+		[SerializeField] private SpriteRenderer _spriteRenderer;
+		[SerializeField, Expandable] private ItemStats _itemStats = default;
 		[Space]
-		[SerializeField] private WeightedRandomList<ItemStats> ItemStatsToRollFrom = new();
+		[SerializeField] private WeightedRandomList<ItemStats> _ItemStatsToRollFrom = new();
 
-		private Vector3 originalPosition;
-		private Vector3 previousPosition;
-		private Quaternion originalRotation;
-		private Quaternion previousRotation;
-		private Vector2 originalSize;
-		private Vector2 previousSize;
-		private readonly List<InventoryCell> occupiedCells = new();
+		private Vector3 _originalPosition;
+		private Vector3 _previousPosition;
+		private Quaternion _originalRotation;
+		private Quaternion _previousRotation;
+		private Vector2 _originalSize;
+		private Vector2 _previousSize;
+		private readonly List<InventoryCell> _occupiedCells = new();
+
+		public ItemStats ItemStats { get => _itemStats; }
 
 		private void Start()
 		{
-			itemStats = ItemStatsToRollFrom.GetRandom();
-			spriteRenderer.sprite = itemStats.Sprite;
+			_itemStats = _ItemStatsToRollFrom.GetRandom();
+			_spriteRenderer.sprite = _itemStats.Sprite;
 
-			originalSize = size;
-			originalPosition = transform.position;
-			originalRotation = transform.rotation;
+			_originalSize = _size;
+			_originalPosition = transform.position;
+			_originalRotation = transform.rotation;
 		}
 
 		public void PickUp()
 		{
-			previousPosition = transform.position;
-			previousRotation = transform.rotation;
+			_previousPosition = transform.position;
+			_previousRotation = transform.rotation;
 			Debug.Log($"Picking Up {transform.name}");
 		}
 		public void Drag()
 		{
 			Vector3 _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			_mousePosition.z = previousPosition.z;
+			_mousePosition.z = _previousPosition.z;
 			transform.position = new Vector3(Mathf.Round(_mousePosition.x * 2) / 2, Mathf.Round(_mousePosition.y * 2) / 2, 0);
 			Debug.Log($"Dragging Up {transform.name}");
 		}
@@ -52,8 +54,8 @@ namespace Assets.Scripts
 		}
 		public void Reset()
 		{
-			transform.SetPositionAndRotation(originalPosition, originalRotation);
-			size = originalSize;
+			transform.SetPositionAndRotation(_originalPosition, _originalRotation);
+			_size = _originalSize;
 			ClearOccupiedCells();
 			Debug.Log($"Reset {transform.name}");
 		}
@@ -65,8 +67,8 @@ namespace Assets.Scripts
 			else
 				transform.Rotate(0, 0, transform.rotation.y + 90);
 
-			Vector2 newSize = new(size.y, size.x);
-			size = newSize;
+			Vector2 newSize = new(_size.y, _size.x);
+			_size = newSize;
 		}
 		private void FindAllOverlappingCellsAndPlaceItemInCenter()
 		{
@@ -77,12 +79,12 @@ namespace Assets.Scripts
 			};
 
 			List<Collider2D> colliders = new();
-			Physics2D.OverlapCollider(polygonCollider, contactFilter, colliders);
+			Physics2D.OverlapCollider(_polygonCollider, contactFilter, colliders);
 
-			if (colliders.Count < cellCount)
+			if (colliders.Count < _cellCount)
 			{
-				transform.SetPositionAndRotation(previousPosition, previousRotation);
-				size = previousSize;
+				transform.SetPositionAndRotation(_previousPosition, _previousRotation);
+				_size = _previousSize;
 				return;
 			}
 
@@ -92,27 +94,27 @@ namespace Assets.Scripts
 
 				if (!inventoryCell) continue;
 
-				if (inventoryCell.Occupied && !occupiedCells.Contains(inventoryCell))
+				if (inventoryCell.Occupied && !_occupiedCells.Contains(inventoryCell))
 				{
-					transform.SetPositionAndRotation(previousPosition, previousRotation);
-					size = previousSize;
+					transform.SetPositionAndRotation(_previousPosition, _previousRotation);
+					_size = _previousSize;
 					return;
 				}
 			}
 
-			previousSize = size;
+			_previousSize = _size;
 			ClearOccupiedCells();
 			foreach (Collider2D collider in colliders)
 			{
 				collider.TryGetComponent(out InventoryCell inventoryCell);
 				inventoryCell.SetOccupied();
-				occupiedCells.Add(inventoryCell);
+				_occupiedCells.Add(inventoryCell);
 			}
 
-			combinedCellsBounds = occupiedCells[0].GetComponent<BoxCollider2D>().bounds;
-			for (int i = 1; i < occupiedCells.Count; i++)
+			combinedCellsBounds = _occupiedCells[0].GetComponent<BoxCollider2D>().bounds;
+			for (int i = 1; i < _occupiedCells.Count; i++)
 			{
-				InventoryCell inventoryCell = occupiedCells[i];
+				InventoryCell inventoryCell = _occupiedCells[i];
 				combinedCellsBounds.Encapsulate(inventoryCell.GetComponent<BoxCollider2D>().bounds);
 			}
 
@@ -120,18 +122,18 @@ namespace Assets.Scripts
 		}
 		private void ClearOccupiedCells()
 		{
-			if (occupiedCells.Count == 0) return;
-			foreach (InventoryCell cell in occupiedCells)
+			if (_occupiedCells.Count == 0) return;
+			foreach (InventoryCell cell in _occupiedCells)
 			{
 				cell.ClearCell();
 			}
-			occupiedCells.Clear();
+			_occupiedCells.Clear();
 		}
 
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.green; // Set the Gizmos color
-			Vector2[] points = polygonCollider.GetPath(0); // Get the points of the polygon
+			Vector2[] points = _polygonCollider.GetPath(0); // Get the points of the polygon
 
 			// Draw lines between consecutive points to visualize the edges of the polygon
 			for (int i = 0; i < points.Length; i++)
@@ -142,7 +144,7 @@ namespace Assets.Scripts
 			}
 
 			Gizmos.color = Color.blue;
-			Gizmos.DrawWireCube(transform.position, size);
+			Gizmos.DrawWireCube(transform.position, _size);
 		}
 	}
 }

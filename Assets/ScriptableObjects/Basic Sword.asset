@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35db6df37141a9f4889543554eb42b78, type: 3}
   m_Name: Basic Sword
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 0da33436d58f2684bb8cbffa31279a81, type: 3}
-  rarity: 2
-  cost: 25
+  _sprite: {fileID: 21300000, guid: 5af5c816497641c418a3c1d0635d33c0, type: 3}
+  _rarity: 2
+  _cost: 55

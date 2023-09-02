@@ -4,54 +4,76 @@ namespace Assets.Scripts
 {
 	public class InventoryManager : MonoBehaviour
 	{
-		private DraggableItem currentDraggableItem;
-		private Collider2D itemCollider;
+		[SerializeField] private ItemStatsOverlay _itemStatsOverlay;
+
+		private DraggableItem _currentDraggableItem;
+		private Vector3 _mousePosition;
+
 		private void Update()
 		{
+			HandleTooltip();
+			HandleInput();
+		}
+
+		private void HandleInput()
+		{
+			Collider2D _itemCollider;
 			if (Input.GetMouseButtonDown(1))
 			{
-				itemCollider = RaycastForItem().collider;
-				if (itemCollider != null)
+				_itemCollider = RaycastForItem().collider;
+				if (_itemCollider != null)
 				{
-					currentDraggableItem = itemCollider.gameObject.GetComponent<DraggableItem>();
-					currentDraggableItem.Reset();
-					currentDraggableItem = null;
+					_currentDraggableItem = _itemCollider.gameObject.GetComponent<DraggableItem>();
+					_currentDraggableItem.Reset();
+					_currentDraggableItem = null;
 				}
 			}
 			else if (Input.GetMouseButtonDown(0))
 			{
-				itemCollider = RaycastForItem().collider;
-				if (itemCollider != null)
+				_itemCollider = RaycastForItem().collider;
+				if (_itemCollider != null)
 				{
-					currentDraggableItem = itemCollider.gameObject.GetComponent<DraggableItem>();
-					currentDraggableItem.PickUp();
+					_currentDraggableItem = _itemCollider.gameObject.GetComponent<DraggableItem>();
+					_currentDraggableItem.PickUp();
 				}
 			}
-			else if (Input.GetMouseButtonUp(0) && currentDraggableItem != null)
+			else if (Input.GetMouseButtonUp(0) && _currentDraggableItem != null)
 			{
-				currentDraggableItem.Place();
-				currentDraggableItem = null;
+				_currentDraggableItem.Place();
+				_currentDraggableItem = null;
 			}
 
-			if (currentDraggableItem != null)
+			if (_currentDraggableItem != null)
 			{
-				currentDraggableItem.Drag();
+				_currentDraggableItem.Drag();
 			}
 
-			if (currentDraggableItem && Input.GetKeyDown(KeyCode.Q))
+			if (_currentDraggableItem && Input.GetKeyDown(KeyCode.Q))
 			{
-				currentDraggableItem.Rotate(false);
+				_currentDraggableItem.Rotate(false);
 			}
-			else if (currentDraggableItem && Input.GetKeyDown(KeyCode.E))
+			else if (_currentDraggableItem && Input.GetKeyDown(KeyCode.E))
 			{
-				currentDraggableItem.Rotate(true);
+				_currentDraggableItem.Rotate(true);
 			}
 		}
-
-		private static RaycastHit2D RaycastForItem()
+		private void HandleTooltip()
 		{
-			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Item"));
+			Collider2D _itemCollider = RaycastForItem().collider;
+			if (_itemCollider != null)
+			{
+				_itemStatsOverlay.ToggleOverlay(true);
+				_itemStatsOverlay.SetItemStats(_itemCollider.GetComponent<DraggableItem>().ItemStats);
+			}
+			else
+			{
+				_itemStatsOverlay.ToggleOverlay(false);
+			}
+		}
+		private RaycastHit2D RaycastForItem()
+		{
+			_mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			RaycastHit2D hit = Physics2D.Raycast(_mousePosition, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Item"));
 			return hit;
 		}
 	}

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35db6df37141a9f4889543554eb42b78, type: 3}
   m_Name: Shoddy Sword
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: b6b53ce458fd98642861096a05d0b36d, type: 3}
-  rarity: 1
-  cost: 25
+  _sprite: {fileID: 21300000, guid: b6b53ce458fd98642861096a05d0b36d, type: 3}
+  _rarity: 1
+  _cost: 25

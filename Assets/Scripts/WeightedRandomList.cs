@@ -10,7 +10,7 @@ public class WeightedRandomList<T>
 	[System.Serializable]
 	public struct Pair
 	{
-		[ShowAssetPreview] public T item;
+		[ShowAssetPreview, Expandable] public T item;
 		public float weight;
 
 		public Pair(T item, float weight)

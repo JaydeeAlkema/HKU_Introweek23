@@ -4,33 +4,33 @@ namespace Assets.Scripts
 {
 	public class InventoryCell : MonoBehaviour
 	{
-		private bool occupied = false;
-		private SpriteRenderer spriteRenderer;
+		private bool _occupied = false;
+		private SpriteRenderer _spriteRenderer;
 
-		public bool Occupied { get => occupied; }
+		public bool Occupied { get => _occupied; }
 
 		private void Awake()
 		{
-			spriteRenderer = transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
-			spriteRenderer.color = Color.white;
+			_spriteRenderer = transform.GetChild(1).GetComponentInChildren<SpriteRenderer>();
+			_spriteRenderer.color = Color.white;
 		}
 
 		public bool IsEmpty()
 		{
-			spriteRenderer.color = Color.white;
-			return !occupied;
+			_spriteRenderer.color = Color.white;
+			return !_occupied;
 		}
 
 		public void SetOccupied()
 		{
-			spriteRenderer.color = Color.red;
-			occupied = true;
+			_spriteRenderer.color = Color.red;
+			_occupied = true;
 		}
 
 		public void ClearCell()
 		{
-			spriteRenderer.color = Color.white;
-			occupied = false;
+			_spriteRenderer.color = Color.white;
+			_occupied = false;
 		}
 	}
 }
