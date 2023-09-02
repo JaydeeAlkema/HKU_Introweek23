@@ -12,7 +12,7 @@ namespace Assets.Scripts
 		[SerializeField] private SpriteRenderer spriteRenderer;
 		[SerializeField, Expandable] private ItemStats itemStats = default;
 		[Space]
-		[SerializeField] private WeightedRandomList<ItemStats> ItemStatsToRollFrom = new WeightedRandomList<ItemStats>();
+		[SerializeField] private WeightedRandomList<ItemStats> ItemStatsToRollFrom = new();
 
 		private Vector3 originalPosition;
 		private Vector3 previousPosition;
@@ -20,7 +20,7 @@ namespace Assets.Scripts
 		private Quaternion previousRotation;
 		private Vector2 originalSize;
 		private Vector2 previousSize;
-		private List<InventoryCell> occupiedCells = new List<InventoryCell>();
+		private readonly List<InventoryCell> occupiedCells = new();
 
 		private void Start()
 		{
@@ -47,7 +47,7 @@ namespace Assets.Scripts
 		}
 		public void Place()
 		{
-			FindAllOverlappingCellsAndPlaceItemInCenter(transform.position);
+			FindAllOverlappingCellsAndPlaceItemInCenter();
 			Debug.Log($"Placing {transform.name}");
 		}
 		public void Reset()
@@ -65,10 +65,10 @@ namespace Assets.Scripts
 			else
 				transform.Rotate(0, 0, transform.rotation.y + 90);
 
-			Vector2 newSize = new Vector2(size.y, size.x);
+			Vector2 newSize = new(size.y, size.x);
 			size = newSize;
 		}
-		private void FindAllOverlappingCellsAndPlaceItemInCenter(Vector2 position)
+		private void FindAllOverlappingCellsAndPlaceItemInCenter()
 		{
 			Bounds combinedCellsBounds;
 			ContactFilter2D contactFilter = new()
@@ -89,6 +89,8 @@ namespace Assets.Scripts
 			foreach (Collider2D collider in colliders)
 			{
 				collider.TryGetComponent(out InventoryCell inventoryCell);
+
+				if (!inventoryCell) continue;
 
 				if (inventoryCell.Occupied && !occupiedCells.Contains(inventoryCell))
 				{

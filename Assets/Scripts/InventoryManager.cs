@@ -5,30 +5,25 @@ namespace Assets.Scripts
 	public class InventoryManager : MonoBehaviour
 	{
 		private DraggableItem currentDraggableItem;
-
+		private Collider2D itemCollider;
 		private void Update()
 		{
 			if (Input.GetMouseButtonDown(1))
 			{
-				Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Item"));
-
-				if (hit.collider != null)
+				itemCollider = RaycastForItem().collider;
+				if (itemCollider != null)
 				{
-					currentDraggableItem = hit.collider.gameObject.GetComponent<DraggableItem>();
+					currentDraggableItem = itemCollider.gameObject.GetComponent<DraggableItem>();
 					currentDraggableItem.Reset();
 					currentDraggableItem = null;
 				}
 			}
-
-			if (Input.GetMouseButtonDown(0))
+			else if (Input.GetMouseButtonDown(0))
 			{
-				Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Item"));
-
-				if (hit.collider != null)
+				itemCollider = RaycastForItem().collider;
+				if (itemCollider != null)
 				{
-					currentDraggableItem = hit.collider.gameObject.GetComponent<DraggableItem>();
+					currentDraggableItem = itemCollider.gameObject.GetComponent<DraggableItem>();
 					currentDraggableItem.PickUp();
 				}
 			}
@@ -44,11 +39,20 @@ namespace Assets.Scripts
 			}
 
 			if (currentDraggableItem && Input.GetKeyDown(KeyCode.Q))
+			{
 				currentDraggableItem.Rotate(false);
+			}
 			else if (currentDraggableItem && Input.GetKeyDown(KeyCode.E))
+			{
 				currentDraggableItem.Rotate(true);
+			}
+		}
 
-
+		private static RaycastHit2D RaycastForItem()
+		{
+			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Item"));
+			return hit;
 		}
 	}
 }
