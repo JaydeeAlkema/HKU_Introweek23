@@ -60,7 +60,7 @@ namespace Assets.Scripts
 		private void HandleTooltip()
 		{
 			Collider2D _itemCollider = RaycastForItem().collider;
-			if (_itemCollider != null)
+			if (_itemCollider != null && !_currentDraggableItem)
 			{
 				_itemTooltip.ToggleOverlay(true);
 				_itemTooltip.SetPosition(_mousePosition);
