@@ -21,7 +21,7 @@ public class ItemStats : ScriptableObject
 	[SerializeField] private Sprite _sprite;
 	[SerializeField] private ItemRarity _rarity = ItemRarity.Junk;
 	[SerializeField] private string title = default;
-	[SerializeField] private string description = default;
+	[SerializeField, TextArea] private string description = default;
 	[SerializeField] private int _cost = 25;
 
 	public Sprite Sprite { get => _sprite; }

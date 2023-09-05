@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: ef9036e38cc67a6478008ed307866588, type: 3}
   _rarity: 2
+  title: Basic Axe
+  description: Your standard basic axe, nothing special, but will still hurt a lot!
   _cost: 65

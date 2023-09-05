@@ -27,7 +27,7 @@ public class ItemTooltip : MonoBehaviour
 		_itemImage.sprite = itemStats.Sprite;
 		_itemTitleTextElement.text = itemStats.Title;
 		_itemDescriptionTextElement.text = itemStats.Description;
-		_itemCostTextElement.text = $"Sell: {itemStats.Cost.ToString()}";
+		_itemCostTextElement.text = $"Sell: {itemStats.Cost}";
 	}
 
 	public void SetPosition(Vector2 position)

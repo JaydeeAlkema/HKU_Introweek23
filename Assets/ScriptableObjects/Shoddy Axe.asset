@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 46858c6afadaa384bb1bf5e1aec3f17f, type: 3}
   _rarity: 1
+  title: Shoddy Axe
+  description: A shoddy and rusted axe... But it wil get the job done! right?
   _cost: 35
