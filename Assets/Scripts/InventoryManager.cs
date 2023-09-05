@@ -4,7 +4,7 @@ namespace Assets.Scripts
 {
 	public class InventoryManager : MonoBehaviour
 	{
-		[SerializeField] private ItemStatsOverlay _itemStatsOverlay;
+		[SerializeField] private ItemTooltip _itemTooltip;
 
 		private DraggableItem _currentDraggableItem;
 		private Vector3 _mousePosition;
@@ -62,12 +62,13 @@ namespace Assets.Scripts
 			Collider2D _itemCollider = RaycastForItem().collider;
 			if (_itemCollider != null)
 			{
-				_itemStatsOverlay.ToggleOverlay(true);
-				_itemStatsOverlay.SetItemStats(_itemCollider.GetComponent<DraggableItem>().ItemStats);
+				_itemTooltip.ToggleOverlay(true);
+				_itemTooltip.SetPosition(_mousePosition);
+				_itemTooltip.SetItemStats(_itemCollider.GetComponent<DraggableItem>().ItemStats);
 			}
 			else
 			{
-				_itemStatsOverlay.ToggleOverlay(false);
+				_itemTooltip.ToggleOverlay(false);
 			}
 		}
 		private RaycastHit2D RaycastForItem()
